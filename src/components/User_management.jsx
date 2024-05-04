@@ -90,11 +90,11 @@ function User_management() {
     }
 
     const res = await apiRequest.delete("/deleteUsers", {
-      ids: selectedItems,
-      token: localStorage.getItem("token"),
+      data: { ids: selectedItems, token: localStorage.getItem("token") },
     });
     console.log(res);
     alert(res.data);
+    localStorage.removeItem("token");
 
     if (res.status === 200) {
       const usersRes = await apiRequest.get("/users");
@@ -123,6 +123,7 @@ function User_management() {
     });
     console.log(res);
     alert(res.data);
+    localStorage.removeItem("token");
 
     if (res.status === 200) {
       const usersRes = await apiRequest.get("/users");

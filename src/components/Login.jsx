@@ -47,7 +47,7 @@ function Login() {
       window.dispatchEvent(new PopStateEvent("popstate"));
       return;
     } else if (!res.data?.userId && !res.data?.message)
-      alert("You blocked by other user. You can't log in.");
+      alert("You have been blocked.");
     else alert(res.data?.message);
   };
 
