@@ -15,7 +15,9 @@ function User_management() {
 
   useEffect(() => {
     const checkUser = async () => {
-      const res = await apiRequest.get("/checkUser");
+      const res = await apiRequest.post("/checkUser", {
+        token: localStorage.getItem("token"),
+      });
       console.log(res.data);
       if (!res.data?.Id) {
         return navigate("/login");
@@ -31,7 +33,9 @@ function User_management() {
 
   const handleAllCheckboxChange = async () => {
     //check tuhe user authenticated or not
-    const res = await apiRequest.get("/checkUser");
+    const res = await apiRequest.post("/checkUser", {
+      token: localStorage.getItem("token"),
+    });
     console.log(res.data);
     if (!res.data.Id) {
       return navigate("/login");
@@ -59,7 +63,9 @@ function User_management() {
       setSelectedItems([...selectedItems, value]);
       console.log(selectedItems);
       //check tuhe user authenticated or not
-      const res = await apiRequest.get("/checkUser");
+      const res = await apiRequest.post("/checkUser", {
+        token: localStorage.getItem("token"),
+      });
       console.log(res.data);
       if (!res.data.Id) {
         return navigate("/login");
@@ -72,7 +78,9 @@ function User_management() {
   };
 
   const deleteUsers = async () => {
-    const result = await apiRequest.get("/checkUser");
+    const result = await apiRequest.post("/checkUser", {
+      token: localStorage.getItem("token"),
+    });
     console.log(result.data);
     if (!result.data.Id) {
       return navigate("/login");
@@ -82,7 +90,8 @@ function User_management() {
     }
 
     const res = await apiRequest.delete("/deleteUsers", {
-      data: selectedItems,
+      ids: selectedItems,
+      token: localStorage.getItem("token"),
     });
     console.log(res);
     alert(res.data);
@@ -96,7 +105,9 @@ function User_management() {
   };
 
   const BlockOrUnblock = async (param) => {
-    const result = await apiRequest.get("/checkUser");
+    const result = await apiRequest.post("/checkUser", {
+      token: localStorage.getItem("token"),
+    });
     console.log(result.data);
     if (!result.data.Id) {
       return navigate("/login");
@@ -106,8 +117,9 @@ function User_management() {
     }
 
     const res = await apiRequest.patch("/blockOrUnblockUsers", {
-      selectedItems,
+      ids: selectedItems,
       status: param,
+      token: localStorage.getItem("token"),
     });
     console.log(res);
     alert(res.data);
@@ -123,7 +135,9 @@ function User_management() {
   const Logout = async () => {
     const res = await apiRequest.post("/logout", {
       data: dataReceived?.LoginTime,
+      token: localStorage.getItem("token"),
     });
+    localStorage.removeItem("token");
     return navigate("/login");
   };
 

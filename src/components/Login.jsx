@@ -8,7 +8,9 @@ function Login() {
 
   useEffect(() => {
     const checkUser = async () => {
-      const res = await apiRequest.get("/checkUser");
+      const res = await apiRequest.post("/checkUser", {
+        token: localStorage.getItem("token"),
+      });
       console.log(res.data);
       if (res.data.Id) {
         return navigate("/");
@@ -29,11 +31,12 @@ function Login() {
       email,
       password,
     });
-
     console.log(res.data);
 
     if (res.data?.userId) {
       e.target.reset();
+      localStorage.removeItem("token");
+      localStorage.setItem("token", res.data?.token);
       //return history.push(`/?LoginTime=${res.data.lastLoginTime}`);
 
       window.history.pushState(

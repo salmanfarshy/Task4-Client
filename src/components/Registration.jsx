@@ -8,7 +8,9 @@ function Registration() {
 
   useEffect(() => {
     const checkUser = async () => {
-      const res = await apiRequest.get("/checkUser");
+      const res = await apiRequest.post("/checkUser", {
+        token: localStorage.getItem("token"),
+      });
       console.log(res.data);
       if (res.data.Id) {
         return navigate("/");
@@ -34,7 +36,10 @@ function Registration() {
     console.log(res.data);
     alert(res.data?.message);
     e.target.reset();
-    if (res.data?.userId) return navigate("/");
+    if (res.data?.userId) {
+      localStorage.setItem("token", res.data?.token);
+      return navigate("/");
+    }
   };
 
   return (
