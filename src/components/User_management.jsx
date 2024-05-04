@@ -78,6 +78,10 @@ function User_management() {
   };
 
   const deleteUsers = async () => {
+    if (!selectedItems.length) {
+      return;
+    }
+
     setIsRender(false);
     const result = await apiRequest.post("/checkUser", {
       token: localStorage.getItem("token"),
@@ -85,9 +89,6 @@ function User_management() {
     console.log(result.data);
     if (!result.data.Id) {
       return navigate("/login");
-    }
-    if (!selectedItems.length) {
-      return;
     }
 
     const res = await apiRequest.delete("/deleteUsers", {
@@ -107,6 +108,10 @@ function User_management() {
   };
 
   const BlockOrUnblock = async (param) => {
+    if (!selectedItems.length) {
+      return;
+    }
+
     setIsRender(false);
     const result = await apiRequest.post("/checkUser", {
       token: localStorage.getItem("token"),
@@ -114,9 +119,6 @@ function User_management() {
     console.log(result.data);
     if (!result.data.Id) {
       return navigate("/login");
-    }
-    if (!selectedItems.length) {
-      return;
     }
 
     const res = await apiRequest.patch("/blockOrUnblockUsers", {
@@ -146,6 +148,7 @@ function User_management() {
     localStorage.removeItem("token");
     return navigate("/login");
   };
+
   if (!isRender)
     return (
       <div
