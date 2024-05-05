@@ -17,10 +17,10 @@ const router = createBrowserRouter([
     path: "register",
     element: <Registration />,
   },
-  {
+  /*{
     path: "*",
     element: <Non_found />,
-  },
+  },*/
 ]);
 
 function App() {
